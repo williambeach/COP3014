@@ -9,6 +9,6 @@ Assignment 0: Learning to use Canvas and CPP
 using namespace std;
 
 int main() {
-    cout << "My name is William and I write most of my code in JavaScript, until now... dun dun dunnnnn..." endl;
+    cout << "My name is William and I write most of my code in JavaScript, until now... dun dun dunnnnn..." << endl;
     return 0;
 }
