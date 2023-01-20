@@ -18,16 +18,17 @@ using namespace std;
 
 void intro(int *ptr);
 void outro();
-void conversionSelect(int choice, float *dollars, float *change);
-float dollarsToChange();
-float changeToDollars();
+void conversionSelect(int choice);
+void dollarsToChange();
+void changeToDollars();
+void changeConverter(int change, int modulo, int marker, int array[], int divisorArray[]);
 
 int main() {
     int choice;
-    float dollars, change;
     intro(&choice);
     while (choice == 1 || choice == 2) {
-        conversionSelect(choice, &dollars, &change);
+        conversionSelect(choice);
+        intro(&choice);
     }
     
     outro();
@@ -56,24 +57,48 @@ void outro() {
     cout << "Thank you for using our change dispenser/converter\n\n";
 }
 
-void conversionSelect(int choice, float *dollars, float *change){
-    switch (choice){
-        case 1:
-            *dollars = dollarsToChange();
-            break;
-        case 2:
-            //*change = changeToDollars();
-            break;
+void conversionSelect(int choice){
+    if (choice == 1){
+        dollarsToChange();
+    } else {
+        changeToDollars();
     }
 }
 
-float dollarsToChange(){
+void dollarsToChange(){
     float dollars;
+    int change, modulo = 1, marker = 0;
+    int array[] = {0, 0, 0, 0};
+    int divisorArray[] = {25, 10, 5, 1};
     cout << "Please enter number of dollars and change: " << endl;
     cout << "In format '$x.xx' \n";
     cout << "Then press enter\n\n";
     cin >> dollars;
     cout << "\n\n";
-    cout << dollars;
+    cout << "You entered: $" << dollars;
     cout << "\n\n";
+    change = dollars * 100;
+    changeConverter(change, modulo, marker, array, divisorArray);
+    cout << array[0] << ", " << array[1] << ", " << array[2] << ", " << array[3] << endl;
+}
+
+void changeToDollars(){
+    float change;
+    cout << "Please enter number of quarters, dimes, nickles and pennies" << endl;
+    cout << "in the format <quarters> <dimes> <nickels> <pennies>\n";
+    cout << "with a space between each denomination\n\n";
+    
+}
+
+void changeConverter(int change, int modulo, int marker, int array[], int divisorArray[]) {
+    if (modulo == 0){
+        return;
+    } else {
+       array[marker] = change / divisorArray[marker];
+       change = change % divisorArray[marker];
+       modulo = change;
+       marker += 1;
+       return changeConverter(change, modulo, marker, array, divisorArray);
+
+    }
 }
