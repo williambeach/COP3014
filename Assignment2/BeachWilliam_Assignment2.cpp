@@ -15,7 +15,7 @@ Assignment 2 - Loan Calculator that outputs amortized breakdown to file
 using namespace std;
 
 ofstream output_file; // create an output file object
-const int LENGTH_OF_LOAN = 24; // length of loan doesn't change and is based off sample output in 'Assignment2.pdf'
+
 
 
 /* 
@@ -28,3 +28,4 @@ P == principal amount of loan (user inputted) ($USD) (desired amount to borrow f
 r == monthly interest, (annual interest rate (user inputted) / 12.0) 
 
 */
+
