@@ -9,7 +9,6 @@ Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
 
 
 #include <iostream>
-#include <cstdlib>
 #include <fstream>
 #include <cmath>
 #include <string.h>
@@ -32,10 +31,10 @@ double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan
 void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 // function that keeps track of total payment and total interest paid 
-void calcTotalPayment(double &totalPayments, double &totalInterest);
+void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan);
 
-// function which displays the table to the screen and writes it to a file
-void output(double principal, double interestRate);
+// function which displays the table to console and writes table to a file
+void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 int main(){
     double principal, monthlyPayment, monthlyInterest, interestRate;
@@ -54,6 +53,8 @@ int main(){
             monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
             double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
             calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
+            output(paymentArray, monthsOfLoan);
+            calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
         }
         
     }
@@ -128,5 +129,50 @@ void calcInterestAndBalance(double principal, double interestRate, double monthl
         paymentArray[i][3] = paymentAfterInterest;
         paymentArray[i][4] = endingBalance;
         beginningBalance = endingBalance;
+    }
+}
+
+void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan){
+    cout << "\n\nPayment Every Month: $" << monthlyPayment << "\n\n";
+    cout << "Total of " << monthsOfLoan << " Payments: $" << monthlyPayment * monthsOfLoan << "\n\n";
+    cout << "Total Interest: $" << (monthlyPayment * monthsOfLoan) - principal << "\n\n";
+}
+
+void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+    int i, j;
+    cout << "Month      " << "Beginning Balance     " << "Interest      " << "Principal     " << "Ending Balance\n\n";
+    for (i = 0; i < monthsOfLoan; i++){
+        if (i >= 9 && i <= 10){
+            cout << "  " << (int)paymentArray[i][0] << "           $" << 
+            paymentArray[i][1] << "         $" << 
+            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
+            paymentArray[i][4];
+            cout << "\n\n";
+        } else if (i >= 11 && i <= 12){
+            cout << "  " << (int)paymentArray[i][0] << "           $" << 
+            paymentArray[i][1] << "         $" << 
+            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
+            paymentArray[i][4];
+            cout << "\n\n";
+        } else if (i >= 13 && i <= 22){
+            cout << "  " << (int)paymentArray[i][0] << "           $" << 
+            paymentArray[i][1] << "          $" << 
+            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
+            paymentArray[i][4];
+            cout << "\n\n";
+        } else if (i == 23){
+            cout << "  " << (int)paymentArray[i][0] << "           $" << 
+            paymentArray[i][1] << "           $" << 
+            paymentArray[i][2] << "          $" << paymentArray[i][3] << "        $" << 
+            paymentArray[i][4];
+            cout << "\n\n";
+        }
+        else {
+            cout << "  " << (int)paymentArray[i][0] << "            $" << 
+            paymentArray[i][1] << "         $" << 
+            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
+            paymentArray[i][4];
+            cout << "\n\n";
+        }
     }
 }
