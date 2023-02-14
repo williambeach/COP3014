@@ -14,7 +14,7 @@ Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
 #include <string.h>
 using namespace std;
 
-ofstream output_file("loan_breakdown.txt");
+
 const int NUM_OF_COLUMNS = 5;
 
 
@@ -43,25 +43,16 @@ int main(){
     cout.setf(ios::fixed);
     cout.setf(ios::showpoint);
     cout.precision(2);
-    output_file.setf(ios::fixed);
-    output_file.setf(ios::showpoint);
-    output_file.precision(2);
-    
+    greetUser(quit);
     while (quit != "quit"){
+        getInputs(principal, interestRate, yearsOfLoan);
+        monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
+        double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
+        calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
+        output(paymentArray, monthsOfLoan);
+        calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
         greetUser(quit);
-        if (quit == "quit"){
-            break;
-        } else{
-            getInputs(principal, interestRate, yearsOfLoan);
-            monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
-            double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
-            calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
-            output(paymentArray, monthsOfLoan);
-            calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
-        }
-        
     }
-
     return 0;
 }
 
@@ -178,6 +169,10 @@ void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
             cout << "\n\n";
         }
     }
+    ofstream output_file("loan_breakdown.txt");
+    output_file.setf(ios::fixed);
+    output_file.setf(ios::showpoint);
+    output_file.precision(2);
     output_file << "Month      " << "Beginning Balance     " << "Interest      " << "Principal     " << "Ending Balance\n\n";
     for (i = 0; i < monthsOfLoan; i++){
         if (i >= 9 && i <= 10){
