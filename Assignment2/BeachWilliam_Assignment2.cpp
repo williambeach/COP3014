@@ -3,7 +3,7 @@
 William Beach
 COP3014
 February 12, 2023
-Assignment 2 - Loan Calculator that outputs amortized breakdown to file
+Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
 *
 */
 
@@ -16,24 +16,30 @@ Assignment 2 - Loan Calculator that outputs amortized breakdown to file
 using namespace std;
 
 ofstream output_file; // create an output file object
-
+const int NUM_OF_COLUMNS = 5;
 
 
 // function that greets user and keeps main function clean
 void greetUser(string &quit);
 
 // input function that prompts for user input for priciple, interest rate, and length of loan
-void getInputs(double &principal, float &interestRate, int &yearsOfLoan);
+void getInputs(double &principal, double &interestRate, int &yearsOfLoan);
 
 // function that calculates and updates value of M (monthly payments)
-double calcMonthlyPayments(double principal, float interestRate, int yearsOfLoan);
+double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan, int &monthsOfLoan);
 
-// 
+// function that calculates interest and balance for each month
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+
+// function that keeps track of total payment and total interest paid 
+void calcTotalPayment(double &totalPayments, double &totalInterest);
+
+// function which displays the table to the screen and writes it to a file
+void output(double principal, double interestRate);
 
 int main(){
-    double principal, monthlyPayment;
-    float interestRate;
-    int yearsOfLoan;
+    double principal, monthlyPayment, monthlyInterest, interestRate;
+    int yearsOfLoan, monthsOfLoan;
     string quit;
     cout.setf(ios::fixed);
     cout.setf(ios::showpoint);
@@ -45,8 +51,9 @@ int main(){
             break;
         } else{
             getInputs(principal, interestRate, yearsOfLoan);
-            calcMonthlyPayments(principal, interestRate, yearsOfLoan);
-
+            monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
+            double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
+            calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
         }
         
     }
@@ -66,7 +73,7 @@ void greetUser(string &quit){
     cin >> quit;
 }
 
-void getInputs(double &principal, float &interestRate, int &yearsOfLoan){
+void getInputs(double &principal, double &interestRate, int &yearsOfLoan){
     cout << "\n\n";
     cout << "++++++++++++++++++++++++++++++++++++++++++++\n\n";
     cout << "       Thank you for choosing start\n\n";
@@ -99,21 +106,27 @@ void getInputs(double &principal, float &interestRate, int &yearsOfLoan){
     cout << "\n\n";
 }
 
-/* 
-
-M = P ((r(1+r)^n) / (((1+r)^n) - 1))
-
-where M == monthly payment amount ($USD)
-n == length of loan (in months)
-P == principal amount of loan (user inputted) ($USD) (desired amount to borrow from creditor)
-r == monthly interest, (annual interest rate (user inputted) / 12.0) 
-
-*/
-
-double calcMonthlyPayments(double principal, float interestRate, int yearsOfLoan){
-    int numberOfMonths = yearsOfLoan * 12;
+double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan, int &monthsOfLoan){
+    monthsOfLoan = yearsOfLoan * 12;
     double monthlyInterest = interestRate / 12.0;
-    double monthlyPayments;
-    monthlyPayments = principal * ((monthlyInterest * (pow((1+monthlyInterest), numberOfMonths))) / ((pow((1+monthlyInterest), numberOfMonths)) - 1));
-    return monthlyPayments;
+    double monthlyPayment;
+    monthlyPayment = principal * ((monthlyInterest * (pow((1+monthlyInterest), monthsOfLoan))) / ((pow((1+monthlyInterest), monthsOfLoan)) - 1));
+    return monthlyPayment;
+}
+
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+    int i, j;
+    double beginningBalance = principal;
+    for (i = 0; i < monthsOfLoan; i++){
+        double month = i + 1;
+        double interest = (beginningBalance * interestRate) / 12.0;
+        double paymentAfterInterest = monthlyPayment - interest;
+        double endingBalance = beginningBalance - paymentAfterInterest;
+        paymentArray[i][0] = month;
+        paymentArray[i][1] = beginningBalance;
+        paymentArray[i][2] = interest;
+        paymentArray[i][3] = paymentAfterInterest;
+        paymentArray[i][4] = endingBalance;
+        beginningBalance = endingBalance;
+    }
 }
