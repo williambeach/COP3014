@@ -3,7 +3,7 @@
 William Beach
 COP3014
 February 12, 2023
-Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
+Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file. Please increase the width of your console window to ensure proper alignment of table. 
 *
 */
 
@@ -15,7 +15,7 @@ Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
 using namespace std;
 
 
-const int NUM_OF_COLUMNS = 5;
+const int NUM_OF_COLUMNS = 5; // number of columns in array
 
 
 // function that greets user and keeps main function clean
@@ -109,6 +109,7 @@ double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan
     return monthlyPayment;
 }
 
+// loops through months of loan and pushes to array each month's data
 void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
     int i, j;
     double beginningBalance = principal;
@@ -132,6 +133,8 @@ void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan)
     cout << "Total Interest: $" << (monthlyPayment * monthsOfLoan) - principal << "\n\n";
 }
 
+
+// this function is ugly but utilizes spacing that formats table for 20,000 loan at 10% for 2 years with proper alignment
 void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
     int i;
     cout << "Month      " << "Beginning Balance     " << "Interest      " << "Principal     " << "Ending Balance\n\n";
@@ -169,7 +172,7 @@ void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
             cout << "\n\n";
         }
     }
-    ofstream output_file("loan_breakdown.txt");
+    ofstream output_file("loan_breakdown.txt"); // this precludes the need to use fail when checking to see if file open succeeds, as it creates a file on the fly
     output_file.setf(ios::fixed);
     output_file.setf(ios::showpoint);
     output_file.precision(2);
