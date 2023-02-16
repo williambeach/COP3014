@@ -208,5 +208,6 @@ void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
             output_file << "\n\n";
         }
     }
+    
     output_file.close();
 }
