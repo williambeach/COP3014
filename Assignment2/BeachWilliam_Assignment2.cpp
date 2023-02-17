@@ -27,13 +27,13 @@ void getInputs(double &principal, double &interestRate, int &yearsOfLoan);
 double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan, int &monthsOfLoan);
 
 // function that calculates interest and balance for each month
-void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 // function that keeps track of total payment and total interest paid 
 void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan);
 
 // function which displays the table to console and writes table to a file
-void outputToFileAndConsole(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+void outputToFileAndConsole(string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 int main(){
     double principal, monthlyPayment, monthlyInterest, interestRate;
@@ -46,7 +46,7 @@ int main(){
     while (quit != "quit"){
         getInputs(principal, interestRate, yearsOfLoan);
         monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
-        double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
+        string paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
         calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
         outputToFileAndConsole(paymentArray, monthsOfLoan);
         calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
@@ -108,7 +108,7 @@ double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan
     return monthlyPayment;
 }
 
-void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
     int i, j;
     double beginningBalance = principal;
     for (i = 0; i < monthsOfLoan; i++){
@@ -116,11 +116,11 @@ void calcInterestAndBalance(double principal, double interestRate, double monthl
         double interest = (beginningBalance * interestRate) / 12.0;
         double paymentAfterInterest = monthlyPayment - interest;
         double endingBalance = beginningBalance - paymentAfterInterest;
-        paymentArray[i][0] = month;
-        paymentArray[i][1] = beginningBalance;
-        paymentArray[i][2] = interest;
-        paymentArray[i][3] = paymentAfterInterest;
-        paymentArray[i][4] = endingBalance;
+        paymentArray[i][0] = to_string(month);
+        paymentArray[i][1] = "$" + to_string(beginningBalance);
+        paymentArray[i][2] = "$" + to_string(interest);
+        paymentArray[i][3] = "$" + to_string(paymentAfterInterest);
+        paymentArray[i][4] = "$" + to_string(endingBalance);
         beginningBalance = endingBalance;
     }
 }
@@ -131,34 +131,40 @@ void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan)
     cout << "Total Interest: $" << (monthlyPayment * monthsOfLoan) - principal << "\n\n";
 }
 
-void outputToFileAndConsole(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+
+
+void outputToFileAndConsole(string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
   int dollarLengths[4];
-  int i, j;
+  int i, index;
   cout << "Month";
   cout.width(20);
   cout << "Beginning Balance" ;
   cout.width(13);
   cout << "Interest"; 
-  cout.width(13);
+  cout.width(14);
   cout << "Principal";
   cout.width(20);
   cout << "Ending Balance\n\n";
   for (i = 0; i < monthsOfLoan; i++){
       cout.width(3);
-      cout << (int)paymentArray[i][0];
-      cout.width(10);
-      cout << "$";
-      cout << paymentArray[i][1];
-      cout.width(10); 
-      cout << "$";
-      cout << paymentArray[i][2];
-      cout.width(7);
-      cout << "$";
-      cout << paymentArray[i][3];
-      cout.width(8);
-      cout << "$";
-      cout << paymentArray[i][4];
-      cout << "\n\n";
+    if (i >= 9){
+      cout << paymentArray[i][0].substr(0,2);
+    } else{
+      cout << paymentArray[i][0].substr(0,1);
+    }
+    cout.width(17);
+    index = paymentArray[i][1].find(".");
+    cout << paymentArray[i][1].substr(0, index + 3);
+    cout.width(17);
+    index = paymentArray[i][2].find(".");
+    cout << paymentArray[i][2].substr(0, index+3);
+    cout.width(14);
+    index = paymentArray[i][3].find(".");
+    cout << paymentArray[i][3].substr(0, index+3);
+    cout.width(16);
+    index = paymentArray[i][4].find(".");
+    cout << paymentArray[i][4].substr(0, index+3);
+    cout << "\n\n";
     }
   ofstream outfile("loanbreakdown.txt");
   outfile.setf(ios::fixed);
@@ -169,26 +175,29 @@ void outputToFileAndConsole(double paymentArray[][NUM_OF_COLUMNS], int monthsOfL
   outfile << "Beginning Balance" ;
   outfile.width(13);
   outfile << "Interest"; 
-  outfile.width(13);
+  outfile.width(14);
   outfile << "Principal";
   outfile.width(20);
   outfile << "Ending Balance\n\n";
   for (i = 0; i < monthsOfLoan; i++){
-      outfile.width(3);
-      outfile << (int)paymentArray[i][0];
-      outfile.width(10);
-      outfile << "$";
-      outfile << paymentArray[i][1];
-      outfile.width(10); 
-      outfile << "$";
-      outfile << paymentArray[i][2];
-      outfile.width(7);
-      outfile << "$";
-      outfile << paymentArray[i][3];
-      outfile.width(8);
-      outfile << "$";
-      outfile << paymentArray[i][4];
-      outfile << "\n\n";
-  }
-  
+    outfile.width(3);
+    if (i >= 9){
+      outfile << paymentArray[i][0].substr(0,2);
+    } else{
+      outfile << paymentArray[i][0].substr(0,1);
+    }
+    outfile.width(17);
+    index = paymentArray[i][1].find(".");
+    outfile << paymentArray[i][1].substr(0, index + 3);
+    outfile.width(17);
+    index = paymentArray[i][2].find(".");
+    outfile << paymentArray[i][2].substr(0, index+3);
+    outfile.width(14);
+    index = paymentArray[i][3].find(".");
+    outfile << paymentArray[i][3].substr(0, index+3);
+    outfile.width(16);
+    index = paymentArray[i][4].find(".");
+    outfile << paymentArray[i][4].substr(0, index+3);
+    outfile << "\n\n";
+    }
 }
