@@ -7,7 +7,6 @@ Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file
 *
 */
 
-
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -34,7 +33,7 @@ void calcInterestAndBalance(double principal, double interestRate, double monthl
 void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan);
 
 // function which displays the table to console and writes table to a file
-void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+void outputToFileAndConsole(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 int main(){
     double principal, monthlyPayment, monthlyInterest, interestRate;
@@ -49,7 +48,7 @@ int main(){
         monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
         double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
         calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
-        output(paymentArray, monthsOfLoan);
+        outputToFileAndConsole(paymentArray, monthsOfLoan);
         calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
         greetUser(quit);
     }
@@ -132,82 +131,64 @@ void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan)
     cout << "Total Interest: $" << (monthlyPayment * monthsOfLoan) - principal << "\n\n";
 }
 
-void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
-    int i;
-    cout << "Month      " << "Beginning Balance     " << "Interest      " << "Principal     " << "Ending Balance\n\n";
-    for (i = 0; i < monthsOfLoan; i++){
-        if (i >= 9 && i <= 10){
-            cout << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            cout << "\n\n";
-        } else if (i >= 11 && i <= 12){
-            cout << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            cout << "\n\n";
-        } else if (i >= 13 && i <= 22){
-            cout << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "          $" << 
-            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            cout << "\n\n";
-        } else if (i == 23){
-            cout << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "           $" << 
-            paymentArray[i][2] << "          $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            cout << "\n\n";
-        }
-        else {
-            cout << "  " << (int)paymentArray[i][0] << "            $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            cout << "\n\n";
-        }
+void outputToFileAndConsole(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+  int dollarLengths[4];
+  int i, j;
+  cout << "Month";
+  cout.width(20);
+  cout << "Beginning Balance" ;
+  cout.width(13);
+  cout << "Interest"; 
+  cout.width(13);
+  cout << "Principal";
+  cout.width(20);
+  cout << "Ending Balance\n\n";
+  for (i = 0; i < monthsOfLoan; i++){
+      cout.width(3);
+      cout << (int)paymentArray[i][0];
+      cout.width(10);
+      cout << "$";
+      cout << paymentArray[i][1];
+      cout.width(10); 
+      cout << "$";
+      cout << paymentArray[i][2];
+      cout.width(7);
+      cout << "$";
+      cout << paymentArray[i][3];
+      cout.width(8);
+      cout << "$";
+      cout << paymentArray[i][4];
+      cout << "\n\n";
     }
-    ofstream output_file("loan_breakdown.txt");
-    output_file.setf(ios::fixed);
-    output_file.setf(ios::showpoint);
-    output_file.precision(2);
-    output_file << "Month      " << "Beginning Balance     " << "Interest      " << "Principal     " << "Ending Balance\n\n";
-    for (i = 0; i < monthsOfLoan; i++){
-        if (i >= 9 && i <= 10){
-            output_file << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            output_file << "\n\n";
-        } else if (i >= 11 && i <= 12){
-            output_file << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            output_file << "\n\n";
-        } else if (i >= 13 && i <= 22){
-            output_file << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "          $" << 
-            paymentArray[i][2] << "         $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            output_file << "\n\n";
-        } else if (i == 23){
-            output_file << "  " << (int)paymentArray[i][0] << "           $" << 
-            paymentArray[i][1] << "           $" << 
-            paymentArray[i][2] << "          $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            output_file << "\n\n";
-        }
-        else {
-            output_file << "  " << (int)paymentArray[i][0] << "            $" << 
-            paymentArray[i][1] << "         $" << 
-            paymentArray[i][2] << "        $" << paymentArray[i][3] << "        $" << 
-            paymentArray[i][4];
-            output_file << "\n\n";
-        }
-    }
-    
-    output_file.close();
+  ofstream outfile("loanbreakdown.txt");
+  outfile.setf(ios::fixed);
+  outfile.setf(ios::showpoint);
+  outfile.precision(2);
+  outfile << "Month";
+  outfile.width(20);
+  outfile << "Beginning Balance" ;
+  outfile.width(13);
+  outfile << "Interest"; 
+  outfile.width(13);
+  outfile << "Principal";
+  outfile.width(20);
+  outfile << "Ending Balance\n\n";
+  for (i = 0; i < monthsOfLoan; i++){
+      outfile.width(3);
+      outfile << (int)paymentArray[i][0];
+      outfile.width(10);
+      outfile << "$";
+      outfile << paymentArray[i][1];
+      outfile.width(10); 
+      outfile << "$";
+      outfile << paymentArray[i][2];
+      outfile.width(7);
+      outfile << "$";
+      outfile << paymentArray[i][3];
+      outfile.width(8);
+      outfile << "$";
+      outfile << paymentArray[i][4];
+      outfile << "\n\n";
+  }
+  
 }
