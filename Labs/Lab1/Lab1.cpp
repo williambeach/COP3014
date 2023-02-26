@@ -13,10 +13,19 @@ Program that gets input from user to calculate Hat size, jacket size, and waist 
 using namespace std;
 
 
+// get inputs from user
 void getInputs(int &height, int &weight, int &age);
+
+// calculate hat size
 void hatSize(int weight, int height, double &hat);
+
+// calculate current jacket size and jacket size in 10 years
 void jacketSize(int weight, int height, int age, double &jacket, double &jacket10Yrs);
+
+// calculate current waist in inches and waist in 10 years
 void waistInInches(int weight, int age, double &waist, double &waist10Yrs);
+
+// output data to console and file
 void outputToFileAndConsole(double hat, double jacket, double jacket10Yrs, double waist, double waist10Yrs);
 
 int main(){

@@ -116,7 +116,7 @@ void calcInterestAndBalance(double principal, double interestRate, double monthl
         double interest = (beginningBalance * interestRate) / 12.0;
         double paymentAfterInterest = monthlyPayment - interest;
         double endingBalance = beginningBalance - paymentAfterInterest;
-        paymentArray[i][0] = to_string(month);
+        paymentArray[i][0] = to_string(month); //convert numbers to strings before storing in array 
         paymentArray[i][1] = "$" + to_string(beginningBalance);
         paymentArray[i][2] = "$" + to_string(interest);
         paymentArray[i][3] = "$" + to_string(paymentAfterInterest);
@@ -153,7 +153,7 @@ void outputToFileAndConsole(string paymentArray[][NUM_OF_COLUMNS], int monthsOfL
       cout << paymentArray[i][0].substr(0,1);
     }
     cout.width(17);
-    index = paymentArray[i][1].find(".");
+    index = paymentArray[i][1].find("."); //stored numbers as strings so I can use string functions on data before outputting
     cout << paymentArray[i][1].substr(0, index + 3);
     cout.width(17);
     index = paymentArray[i][2].find(".");
