@@ -58,10 +58,10 @@ int main(){
     cout.setf(ios::showpoint);
     cout.precision(2);
     
-    COP3014 joe, william("william", "beach", "z23194964", 20, 10, 20, 80, 90);
-    COP3014 student = student.createStudent();
+    COP3014 joe, william("william", "beach", "z23194964", 20, 10, 20, 80, 90); //declare two student objects using default and parameter constructors
+    COP3014 student = student.createStudent(); // create student using user input
 
-    joe.output();
+    joe.output(); // output student scores and grades
     william.output();
     student.output();
     
