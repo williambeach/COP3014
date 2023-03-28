@@ -71,6 +71,7 @@ int main(){
     myDate3.set_year(2060);
     cout << myDate3.get_year() << endl;
 
+    myDate2.output_date(cout);
     
 
 
