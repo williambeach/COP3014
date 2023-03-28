@@ -7,7 +7,6 @@ Assignment 2 - Loan Calculator that outputs amortized monthly breakdown to file.
 *
 */
 
-
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -28,13 +27,13 @@ void getInputs(double &principal, double &interestRate, int &yearsOfLoan);
 double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan, int &monthsOfLoan);
 
 // function that calculates interest and balance for each month
-void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 // function that keeps track of total payment and total interest paid 
 void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan);
 
 // function which displays the table to console and writes table to a file
-void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
+void outputToFileAndConsole(string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan);
 
 int main(){
     double principal, monthlyPayment, monthlyInterest, interestRate;
@@ -47,9 +46,9 @@ int main(){
     while (quit != "quit"){
         getInputs(principal, interestRate, yearsOfLoan);
         monthlyPayment = calcMonthlyPayment(principal, interestRate, yearsOfLoan, monthsOfLoan);
-        double paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
+        string paymentArray[monthsOfLoan][NUM_OF_COLUMNS];
         calcInterestAndBalance(principal, interestRate, monthlyPayment, paymentArray, monthsOfLoan);
-        output(paymentArray, monthsOfLoan);
+        outputToFileAndConsole(paymentArray, monthsOfLoan);
         calcTotalPayment(monthlyPayment, principal, monthsOfLoan);
         greetUser(quit);
     }
@@ -109,8 +108,12 @@ double calcMonthlyPayment(double principal, double interestRate, int yearsOfLoan
     return monthlyPayment;
 }
 
+<<<<<<< HEAD
 // loops through months of loan and pushes to array each month's data
 void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+=======
+void calcInterestAndBalance(double principal, double interestRate, double monthlyPayment, string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+>>>>>>> e7db4560090333de91dde7915fdfa056b05651b7
     int i, j;
     double beginningBalance = principal;
     for (i = 0; i < monthsOfLoan; i++){
@@ -118,11 +121,11 @@ void calcInterestAndBalance(double principal, double interestRate, double monthl
         double interest = (beginningBalance * interestRate) / 12.0;
         double paymentAfterInterest = monthlyPayment - interest;
         double endingBalance = beginningBalance - paymentAfterInterest;
-        paymentArray[i][0] = month;
-        paymentArray[i][1] = beginningBalance;
-        paymentArray[i][2] = interest;
-        paymentArray[i][3] = paymentAfterInterest;
-        paymentArray[i][4] = endingBalance;
+        paymentArray[i][0] = to_string(month); //convert numbers to strings before storing in array 
+        paymentArray[i][1] = "$" + to_string(beginningBalance);
+        paymentArray[i][2] = "$" + to_string(interest);
+        paymentArray[i][3] = "$" + to_string(paymentAfterInterest);
+        paymentArray[i][4] = "$" + to_string(endingBalance);
         beginningBalance = endingBalance;
     }
 }
@@ -134,6 +137,7 @@ void calcTotalPayment(double monthlyPayment, double principal, int monthsOfLoan)
 }
 
 
+<<<<<<< HEAD
 // this function is ugly but utilizes spacing that formats table for 20,000 loan at 10% for 2 years with proper alignment
 void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
     int i;
@@ -210,6 +214,74 @@ void output(double paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
             paymentArray[i][4];
             output_file << "\n\n";
         }
+=======
+
+void outputToFileAndConsole(string paymentArray[][NUM_OF_COLUMNS], int monthsOfLoan){
+  int dollarLengths[4];
+  int i, index;
+  cout << "Month";
+  cout.width(20);
+  cout << "Beginning Balance" ;
+  cout.width(13);
+  cout << "Interest"; 
+  cout.width(14);
+  cout << "Principal";
+  cout.width(20);
+  cout << "Ending Balance\n\n";
+  for (i = 0; i < monthsOfLoan; i++){
+      cout.width(3);
+    if (i >= 9){
+      cout << paymentArray[i][0].substr(0,2);
+    } else{
+      cout << paymentArray[i][0].substr(0,1);
     }
-    output_file.close();
+    cout.width(17);
+    index = paymentArray[i][1].find("."); //stored numbers as strings so I can use string functions on data before outputting
+    cout << paymentArray[i][1].substr(0, index + 3);
+    cout.width(17);
+    index = paymentArray[i][2].find(".");
+    cout << paymentArray[i][2].substr(0, index+3);
+    cout.width(14);
+    index = paymentArray[i][3].find(".");
+    cout << paymentArray[i][3].substr(0, index+3);
+    cout.width(16);
+    index = paymentArray[i][4].find(".");
+    cout << paymentArray[i][4].substr(0, index+3);
+    cout << "\n\n";
+    }
+  ofstream outfile("loanbreakdown.txt");
+  outfile.setf(ios::fixed);
+  outfile.setf(ios::showpoint);
+  outfile.precision(2);
+  outfile << "Month";
+  outfile.width(20);
+  outfile << "Beginning Balance" ;
+  outfile.width(13);
+  outfile << "Interest"; 
+  outfile.width(14);
+  outfile << "Principal";
+  outfile.width(20);
+  outfile << "Ending Balance\n\n";
+  for (i = 0; i < monthsOfLoan; i++){
+    outfile.width(3);
+    if (i >= 9){
+      outfile << paymentArray[i][0].substr(0,2);
+    } else{
+      outfile << paymentArray[i][0].substr(0,1);
+    }
+    outfile.width(17);
+    index = paymentArray[i][1].find(".");
+    outfile << paymentArray[i][1].substr(0, index + 3);
+    outfile.width(17);
+    index = paymentArray[i][2].find(".");
+    outfile << paymentArray[i][2].substr(0, index+3);
+    outfile.width(14);
+    index = paymentArray[i][3].find(".");
+    outfile << paymentArray[i][3].substr(0, index+3);
+    outfile.width(16);
+    index = paymentArray[i][4].find(".");
+    outfile << paymentArray[i][4].substr(0, index+3);
+    outfile << "\n\n";
+>>>>>>> e7db4560090333de91dde7915fdfa056b05651b7
+    }
 }
