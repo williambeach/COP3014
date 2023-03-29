@@ -44,7 +44,8 @@ class DateYear : public DayOfYear{
         int get_year();
         void set_year(int year);
         void output_date(ostream &out); //you can pass cout or file object
-
+        friend bool DateCompare(const DateYear year1, const DateYear year2);
+        int BDCountdown(int month, int day, int year);
     private:
         void check_year(); //no negative years. I consider year 0 to be legitimate. >9999 will overflow 'xxxx' format.
         int year;
@@ -191,3 +192,20 @@ void DateYear::output_date(ostream &out){
     }
     out << day + "/" + month + "/" + year << endl;
 }
+
+bool DateCompare(const DateYear year1, const DateYear year2){
+    return year1.year == year2.year;
+}
+
+int DateYear::BDCountdown(int month, int day, int year) {
+    DateYear birthday;
+    
+
+
+}
+
+/*if (year % 4 == 0 && year % 100 != 0){ //leap year
+        int arrayOfMonths[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    } else{
+        int arrayOfMonths[] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    }*/
