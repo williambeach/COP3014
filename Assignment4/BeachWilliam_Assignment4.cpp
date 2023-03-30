@@ -53,7 +53,7 @@ class DateYear : public DayOfYear{
 
 int main(){
 
-   /* DateYear myDate1;
+    DateYear myDate1;
     cout << myDate1.get_day() << endl;
     cout << myDate1.get_month() << endl;
     cout << myDate1.get_year() << endl;
@@ -72,7 +72,7 @@ int main(){
     myDate3.set_year(2060);
     cout << myDate3.get_year() << endl;
 
-    myDate2.output_date(cout);*/
+    myDate2.output_date(cout);
     
     DateYear myDate4(3,29,2023);
 
