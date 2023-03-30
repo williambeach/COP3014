@@ -38,21 +38,21 @@ class DayOfYear{
 
 class DateYear : public DayOfYear{
     public:
-        DateYear();
-        DateYear(int month, int day, int year);
+        DateYear(); //initializes date object to 01/01/2023
+        DateYear(int month, int day, int year); 
         void input_date();
         int get_year();
         void set_year(int year);
         void output_date(ostream &out); //you can pass cout or file object
-        friend bool DateCompare(const DateYear year1, const DateYear year2);
+        friend bool DateCompare(const DateYear year1, const DateYear year2); // checks if years are equal
         int BDCountdown(int month, int day, int year);
     private:
-        void check_year(); //no negative years. I consider year 0 to be legitimate. >9999 will overflow 'xxxx' format.
+        void check_year(); //no negative years. I consider year 0 to be legitimate. >9999 will exit program.
         int year;
 };
 
 int main(){
-
+    
     DateYear myDate1;
     cout << myDate1.get_day() << endl;
     cout << myDate1.get_month() << endl;
@@ -76,7 +76,7 @@ int main(){
     
     DateYear myDate4(3,29,2023);
 
-    myDate4.BDCountdown(3,31,2023);
+    cout << "Days till birthday: " << myDate4.BDCountdown(3,31,2023) << endl;
     
 
 
