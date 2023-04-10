@@ -10,7 +10,9 @@ as Visual Studio treated .h file as a C program file
 */
 
 
-#pragma once //used in place of #ifndef construct as it uses compiler cache which is faster
+#ifndef RATIONALSWB_H
+#define RationalSWB_H
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -57,3 +59,4 @@ namespace rationalbeach{
     };
 }
 
+#endif

@@ -10,7 +10,7 @@ COP3014 - Assignment 5 - implementation file
 
 #include <iostream>
 #include <string>
-#include "rationalsWB.hpp"
+#include "rationalsWB.h"
 using namespace std;
 
 namespace{

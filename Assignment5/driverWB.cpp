@@ -10,7 +10,7 @@ COP3014 - Assignment 5 - driver file
 
 #include <iostream>
 #include <string>
-#include "rationalsWB.hpp"
+#include "rationalsWB.h"
 
 int main() {
     using namespace std;
