@@ -13,12 +13,18 @@ COP3014 - Assignment 5 - implementation file
 #include "rationalsWB.h"
 using namespace std;
 
+namespace{
+    bool notZero(int ){
+
+    }
+}
+
 namespace rationalbeach{
     ostream& operator <<(ostream& out, Rational& rational){
       out << rational.numerator << "/" << rational.denominator;
       return out;
     }
-    
+
     istream& operator >>(istream& in, Rational& rational){
       string input;
       int index;
@@ -30,61 +36,61 @@ namespace rationalbeach{
       rational.denominator = den;
       return in;
     }
-    
+
     Rational operator -(const Rational& rat){
       Rational temp;
       temp.numerator = -rat.numerator;
       return temp;
     }
-    
+
     Rational operator +(const Rational& rat1, const Rational& rat2){
       Rational temp;
       temp.numerator = (rat1.numerator * rat2.denominator) + (rat1.denominator * rat2.numerator);
       temp.denominator = rat1.denominator * rat2.denominator;
       return temp;
     }
-    
+
     Rational operator -(const Rational& rat1, const Rational& rat2){
       Rational temp;
       temp.numerator = (rat1.numerator * rat2.denominator) - (rat1.denominator * rat2.numerator);
       temp.denominator = rat1.denominator * rat2.denominator;
       return temp;
     }
-    
+
     Rational operator *(const Rational& rat1, const Rational& rat2){
       Rational temp;
       temp.numerator = rat1.numerator * rat2.numerator;
       temp.denominator = rat1.denominator * rat2.denominator;
       return temp;
     }
-    
+
     Rational operator /(const Rational& rat1, const Rational& rat2){
       Rational temp;
       temp.numerator = rat1.numerator * rat2.denominator;
       temp.denominator = rat2.numerator * rat1.denominator;
       return temp;
     }
-    
+
     bool operator <(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) < (rat2.numerator * rat1.denominator);
     }
-    
+
     bool operator >(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) > (rat2.numerator * rat1.denominator);
     }
-    
+
     bool operator ==(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) == (rat2.numerator * rat1.denominator);
     }
-    
+
     bool operator !=(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) != (rat2.numerator * rat1.denominator);
     }
-    
+
     bool operator <=(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) <= (rat2.numerator * rat1.denominator);
     }
-    
+
     bool operator >=(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) >= (rat2.numerator * rat1.denominator);
     }

@@ -18,7 +18,7 @@ namespace rationalbeach{
     class Rational{
         public:
             //constructor: 2 arguments; creates rational object: num = numerator / den = denominator
-    	    Rational(int num, int den) : numerator(num), denominator(den){};
+    	    Rational(int num, int den);
             //constructor: 1 argument; creates rational object: num = numerator / den = denominator defaults to 1
             Rational(int num): numerator(num), denominator(1){};
             //default constructor: no arguments; creates rational object: numerator = 0 / denominator = 1
