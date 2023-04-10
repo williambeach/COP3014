@@ -33,5 +33,8 @@ int main() {
     cout << rat1 << " != " << rat2 << " = " << (rat1 != rat2) << endl;
     cout << rat1 << " <= " << rat2 << " = " << (rat1 <= rat2) << endl;
     cout << rat1 << " >= " << rat2 << " = " << (rat1 >= rat2) << endl;
+
+    Rational rat4(3,2);
+    
     return 0;
 }
