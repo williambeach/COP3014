@@ -10,16 +10,27 @@ COP3014 - Assignment 5 - implementation file
 
 #include <iostream>
 #include <string>
-#include "rationalsWB.h"
+#include "rationalsWB.hpp"
 using namespace std;
 
 namespace{
-    bool notZero(int ){
-
+    void notZero(int denominator){
+      if (denominator == 0){
+        cout << "Denominator equals zero, can't divide by zero" << endl;
+        cout << "Exiting program" << endl;
+        exit(1);
+      }
     }
 }
 
 namespace rationalbeach{
+
+    Rational::Rational(int num, int den){
+      notZero(den);
+      this->numerator = num;
+      this->denominator = den;
+    }
+
     ostream& operator <<(ostream& out, Rational& rational){
       out << rational.numerator << "/" << rational.denominator;
       return out;

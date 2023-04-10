@@ -2,11 +2,13 @@
 *
 *
 William Beach 
-COP3014 - Assignment 5 - interface file
+COP3014 - Assignment 5 - interface file - .hpp extension used instead of .h
+as Visual Studio treated .h file as a C program file
 04/09/2023
 *
 *
 */
+
 
 #pragma once //used in place of #ifndef construct as it uses compiler cache which is faster
 #include <iostream>
@@ -52,6 +54,7 @@ namespace rationalbeach{
         private:
     	    int numerator;
     	    int denominator;
+            void notZero(int denominator);
     };
 }
 
