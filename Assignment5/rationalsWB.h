@@ -2,16 +2,15 @@
 *
 *
 William Beach 
-COP3014 - Assignment 5 - interface file - .hpp extension used instead of .h
-as Visual Studio treated .h file as a C program file
+COP3014 - Assignment 5 - interface file - in project directory use command 'g++ driverWB.cpp implementationWB.cpp' to create a.exe. TO RUN: use command ./a.exe
 04/09/2023
 *
 *
 */
 
 
-#ifndef RATIONALSWB_H
-#define RationalSWB_H
+#pragma once //instead of #ifndef as it uses compiler cache instead of preprocessing entire file only to see that it was already defined
+
 
 #include <iostream>
 #include <string>
@@ -59,4 +58,3 @@ namespace rationalbeach{
     };
 }
 
-#endif

@@ -23,9 +23,6 @@ namespace{
   }
 }
 
-
-
-
 namespace rationalbeach{
 
     Rational::Rational(int num, int den){
@@ -108,7 +105,6 @@ namespace rationalbeach{
     bool operator >=(const Rational& rat1, const Rational& rat2){
       return (rat1.numerator * rat2.denominator) >= (rat2.numerator * rat1.denominator);
     }
-
 }
 
 
