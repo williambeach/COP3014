@@ -11,4 +11,27 @@ COP3014 - Assignment 5 - driver file
 #include <iostream>
 #include <string>
 #include "rationalsWB.h"
-using namespace std;
+
+int main() {
+    using namespace std;
+    using namespace rationalbeach;
+    
+    Rational rat1, rat2, rat3;
+    cout << "Enter two rational numbers: ";
+    cin >> rat1 >> rat2;
+    rat3 = rat1 + rat2;
+    cout << rat1 << " + " << rat2 << " = " << rat3 << endl;
+    rat3 = rat1 - rat2;
+    cout << rat1 << " - " << rat2 << " = " << rat3 << endl;
+    rat3 = rat1 * rat2;
+    cout << rat1 << " * " << rat2 << " = " << rat3 << endl;
+    rat3 = rat1 / rat2;
+    cout << rat1 << " / " << rat2 << " = " << rat3 << endl;
+    cout << rat1 << " < " << rat2 << " = " << (rat1 < rat2) << endl;
+    cout << rat1 << " > " << rat2 << " = " << (rat1 > rat2) << endl;
+    cout << rat1 << " == " << rat2 << " = " << (rat1 == rat2) << endl;
+    cout << rat1 << " != " << rat2 << " = " << (rat1 != rat2) << endl;
+    cout << rat1 << " <= " << rat2 << " = " << (rat1 <= rat2) << endl;
+    cout << rat1 << " >= " << rat2 << " = " << (rat1 >= rat2) << endl;
+    return 0;
+}
