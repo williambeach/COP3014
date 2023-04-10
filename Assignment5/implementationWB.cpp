@@ -13,18 +13,20 @@ COP3014 - Assignment 5 - implementation file
 #include "rationalsWB.hpp"
 using namespace std;
 
+namespace{
+  void notZero(int denominator){
+    if (denominator == 0){
+      cout << "Denominator equals zero, can't divide by zero" << endl;
+      cout << "Exiting program" << endl;
+      exit(1);
+    }
+  }
+}
+
 
 
 
 namespace rationalbeach{
-
-    void Rational::notZero(int denominator){
-      if (denominator == 0){
-        cout << "Denominator equals zero, can't divide by zero" << endl;
-        cout << "Exiting program" << endl;
-        exit(1);
-      }
-    }
 
     Rational::Rational(int num, int den){
       notZero(den);

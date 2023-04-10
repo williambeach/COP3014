@@ -54,7 +54,6 @@ namespace rationalbeach{
         private:
     	    int numerator;
     	    int denominator;
-            void notZero(int denominator);
     };
 }
 
